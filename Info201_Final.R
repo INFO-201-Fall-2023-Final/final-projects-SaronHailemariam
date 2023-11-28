@@ -4,10 +4,12 @@ library(ggplot2)
 prescription_rates_df<- read.csv("Medicaid Opioid Prescribing Rates by Geography.csv") 
 overdose_df<-read.csv("NCHS_-_Drug_Poisoning_Mortality_by_County__United_States.csv") 
 
+#Data Joining
+
 #Adds a new column named State in the prescription_rates_df
 prescription_rates_df$State<-prescription_rates_df$Geo_Desc
 
-#Cleans datasets so that they can be joined
+#Cleans prescription_rates_df
 prescription_rates_df<-filter(prescription_rates_df,!is.na(Opioid_Prscrbng_Rate))
 prescription_rates_df<-filter(prescription_rates_df,!is.na(Opioid_Prscrbng_Rate_1Y_Chg))
 prescription_rates_df<-filter(prescription_rates_df,!is.na(Opioid_Prscrbng_Rate_5Y_Chg))
@@ -15,17 +17,22 @@ prescription_rates_df<-filter(prescription_rates_df,!is.na(Opioid_Prscrbng_Rate_
 grouped_prescription<-group_by(prescription_rates_df, State, Year)
 grouped_prescription_rates_df<-summarise(
   grouped_prescription, 
-  sum_population=sum(Tot_Clms), 
-  sum_population=sum(Tot_Opioid_Clms),
+  sum_Tot_Clms=sum(Tot_Clms), 
+  sum_Tot_Opioid_Clms=sum(Tot_Opioid_Clms),
   mean_Opioid_Prscrbng_Rate=mean(Opioid_Prscrbng_Rate),
   mean_Opioid_Prscrbng_Rate_1Y_Chg=mean(Opioid_Prscrbng_Rate_1Y_Chg),
-  meanOpioid_Prscrbng_Rate_5Y_Chg=mean(Opioid_Prscrbng_Rate_5Y_Chg))
+  mean_Opioid_Prscrbng_Rate_5Y_Chg=mean(Opioid_Prscrbng_Rate_5Y_Chg))
 
+#Take out the commas to make population numeric
+overdose_df$Population<-as.numeric(gsub(",","",overdose_df$Population))
+typeof(overdose_df$Population)
 
+#Cleans overdose_df
 overdose_df<-filter(overdose_df,!is.na(Population))
 grouped_overdose<-group_by(overdose_df, State, Year)
 grouped_overdose_df<-summarise(
   grouped_overdose, 
+  sum_Population=sum(Population),
   mean_Model.based.Death.Rate=mean(Model.based.Death.Rate),
   mean_Standard.Deviation=mean(Standard.Deviation),
   mean_Lower.Confidence.Limit=mean(Lower.Confidence.Limit),
@@ -57,28 +64,53 @@ risk_state<-function(state, year){
 #Adds a column to df using the risk_state function, stores TRUE/FAlSE
 df$high_overdose_death_rate<-mapply(risk_state, df$State, df$Year)
 
+#calculate and add column perc_opioid_clms, to store the percentage of total claims that were for opioids
+perc_opioid<-function(state, year){
+  perc_info<-df[df$State==state & df$Year==year,]
+  perc<-((perc_info$sum_Tot_Opioid_Clms/perc_info$sum_Tot_Clms)*100)
+  return(perc)
+}
+
+df$perc_opioid_clms<-mapply(perc_opioid, df$State, df$Year )
+
+
+
+
 #makes summarization data frames first one by state and second one by year 
 by_state<-group_by(df,State)
 rates_by_state<-summarize(
   by_state, 
   avg_opioid_prscrbng_rate_state=mean(mean_Opioid_Prscrbng_Rate),
   avg_overdose_death_rate_state=mean(mean_Model.based.Death.Rate),
-  avg_Opioid_Prscrbng_Rate_1Y_Chg_state=mean(mean_Opioid_Prscrbng_Rate_1Y_Chg))
+  avg_Opioid_Prscrbng_Rate_1Y_Chg_state=mean(mean_Opioid_Prscrbng_Rate_1Y_Chg),
+  avg_perc_opioid_clms=mean(perc_opioid_clms))
 
 by_year<-group_by(df,Year)
 rates_by_Year<-summarise(
   by_year, 
   avg_opioid_prscrbng_rate_yr=mean(mean_Opioid_Prscrbng_Rate),
   avg_overdose_death_rate_yr=mean(mean_Model.based.Death.Rate),
-  avg_Opioid_Prscrbng_Rate_1Y_Chg_state=mean(mean_Opioid_Prscrbng_Rate_1Y_Chg))
+  avg_Opioid_Prscrbng_Rate_1Y_Chg_state=mean(mean_Opioid_Prscrbng_Rate_1Y_Chg),
+  avg_perc_opioid_clms=mean(perc_opioid_clms))
 
-#Function gives the average death rate by year 
+
+
+
+
+#Must create at least one new categorical variable______high risk state true/false ++++ death rate change 1y is postive/negative
+#Death rate increase?
+
+#Must create at least one new continuous/numerical variable___________death rate change 1y 
+#use for loops to see the chnage in death from the previous year
+#Function gives the average death rate per year 
+
+
 rate_deaths_per_yr<-function(Year){
   yearly_death_rate<-group_by(df,Year)
   deaths_yr_rate<-mean(yearly_death_rate$mean_Model.based.Death.Rate[yearly_death_rate$Year==Year])
   return(deaths_yr_rate)
 }
-
+rate_deaths_per_yr(2018)
 
 #Function gives the average death rate by state
 rate_deaths_by_state<-function(State){
@@ -86,5 +118,22 @@ rate_deaths_by_state<-function(State){
   deaths_state_rate<-mean(state_death_rate$mean_Model.based.Death.Rate[state_death_rate$State==State])
   return(deaths_state_rate)
 }
-num_deaths_by_state("Alabama")
+
+#Function gives the average death rate per year and by state
+rate_deaths_state_yr<-function(state, year){
+  rdsy<-df[df$State==state & df$Year==year,]
+  state_yr_death_rate<-mean(rdsy$mean_Model.based.Death.Rate)
+  return(state_yr_death_rate)
+}
+
+
+#This part stores some national value
+
+#Percentage of all claims that are for opioids 
+total_Opioid_Clms<-sum(df$sum_Tot_Opioid_Clms)
+total_Clms<-sum(df$sum_Tot_Clms)
+perc_opioid_prescribed<-((dtotal_Opioid_Clms/df$sum_Tot_Clms)*100)
+ 
+#National avg drug related death rate  
+avg_death_rate<-mean(df$mean_Model.based.Death.Rate)
 
