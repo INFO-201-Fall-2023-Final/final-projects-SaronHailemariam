@@ -72,4 +72,19 @@ rates_by_Year<-summarise(
   avg_overdose_death_rate_yr=mean(mean_Model.based.Death.Rate),
   avg_Opioid_Prscrbng_Rate_1Y_Chg_state=mean(mean_Opioid_Prscrbng_Rate_1Y_Chg))
 
+#Function gives the average death rate by year 
+rate_deaths_per_yr<-function(Year){
+  yearly_death_rate<-group_by(df,Year)
+  deaths_yr_rate<-mean(yearly_death_rate$mean_Model.based.Death.Rate[yearly_death_rate$Year==Year])
+  return(deaths_yr_rate)
+}
+
+
+#Function gives the average death rate by state
+rate_deaths_by_state<-function(State){
+  state_death_rate<-group_by(df,State)
+  deaths_state_rate<-mean(state_death_rate$mean_Model.based.Death.Rate[state_death_rate$State==State])
+  return(deaths_state_rate)
+}
+num_deaths_by_state("Alabama")
 
