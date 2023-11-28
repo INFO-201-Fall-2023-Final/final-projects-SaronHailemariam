@@ -132,7 +132,7 @@ rate_deaths_state_yr<-function(state, year){
 #Percentage of all claims that are for opioids 
 total_Opioid_Clms<-sum(df$sum_Tot_Opioid_Clms)
 total_Clms<-sum(df$sum_Tot_Clms)
-perc_opioid_prescribed<-((dtotal_Opioid_Clms/df$sum_Tot_Clms)*100)
+perc_opioid_prescribed<-((total_Opioid_Clms/df$sum_Tot_Clms)*100)
  
 #National avg drug related death rate  
 avg_death_rate<-mean(df$mean_Model.based.Death.Rate)
