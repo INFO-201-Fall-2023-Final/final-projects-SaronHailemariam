@@ -26,13 +26,12 @@ overdose_df<-filter(overdose_df,!is.na(Population))
 grouped_overdose<-group_by(overdose_df, State, Year)
 grouped_overdose_df<-summarise(
   grouped_overdose, 
-  
   mean_Model.based.Death.Rate=mean(Model.based.Death.Rate),
   mean_Standard.Deviation=mean(Standard.Deviation),
   mean_Lower.Confidence.Limit=mean(Lower.Confidence.Limit),
   mean_Upper.Confidence.Limit=mean(Upper.Confidence.Limit))
 
-#sum_Population=sum(Population),
+
 
 #Joins the datasets
 df<-merge(grouped_overdose_df,grouped_prescription_rates_df,by=c("State", "Year"))
