@@ -10,13 +10,13 @@ prescription_rates_df<- read.csv("Medicaid Opioid Prescribing Rates by Geography
 overdose_df<-read.csv("NCHS_-_Drug_Poisoning_Mortality_by_County__United_States.csv") 
 
 
-
-ui<-fluidPage(
-  
-  #Page 1
+#Page 1
+ui<-navbarPage("Death by Drug Overdose", 
+              h3("cool"),
+ 
   #__________________________________________________________
- page_one<-titlePanel("Introduction"),
- h3("cool"),
+
+
  
    
    
@@ -24,43 +24,53 @@ ui<-fluidPage(
    
 #Page 2
 #______________________________________________________________________
-page_two<- sidebarLayout(
+tabPanel("Explore the problem",
+sidebarLayout(
   sidebarPanel(
-    titlePanel("The problem"),
     selectInput( 
-      inputId = "death_map", 
-      label= "Select year to view overdose death rates",
+      inputId = "state_death", 
+      label= "Select a state to view overdose death rates",
+      choices= df$State)
+  ),
+    selectInput( 
+      inputId = "year_death", 
+      label= "Select a year to view overdose death rates",
       choices= df$Year)
   ),
   mainPanel(
-    h3("Bar graph of deaths"),
-    plotlyOutput(outputId = "bar")
-  )), 
+    h3("Seeing is believing"),
+    tabsetPanel(
+      tabPanel("Death by Year", plotlyOutput(outputId = "year")),
+      tabPanel("Death by State" , plotlyOutput(outputId = "state")),
+      #tabPanel("State and Year", plotlyOutput(outputId = "state and year"))
+    )
+    
+  )))
 
-
+#by state, by year, by year and state , 
 #___________________________________________________________
-tabsetPanel(
-  tabPanel("Death by Drug Overdose", page_one),
- tabPanel("The problem", page_two),
- # tabPanel("Medicare", page_three),
- # tabPanel("Question 1", page_four),
- # tabPanel("Question 2", page_five),
- # tabPanel("Qestion 3", page_six),
- # tabPanel("Conclusion", page_seven)
-),
-)
+
 
 server<-function(input, output){
-
-output$bar<-renderPlotly({
-      B<-ggplotly(df, aes(x= Year , y=mean_Model.based.Death.Rate))+
-        geom_bar(stat="identity")+
-        labs(x="Year", y="Death Rate",
-             title="...",
-             caption = ...)
-      B<-ggplotly(B, tooltip = "text")
-      return(B)
+ 
+output$state <- renderPlotly({  
+    A<-ggplot(df, aes(x=State, y=reorder(mean_Model.based.Death.Rate), ))+
+      geom_bar(stat="identity")+
+      labs(x="State", y= "Death Rate", )
+   
+    A<- ggplotly(A, tooltip = "text") 
+    
+    return(A)
     })
+output$year<- renderPlotly({  
+  A<-ggplot(df, aes(x=df$Year, y=df$mean_Model.based.Death.Rate, ))+
+    geom_bar(stat="identity")+
+    labs(x="Year ", y= "Death Rate", )
+  A<- ggplotly(A, tooltip = "text")
+  return(A)
+})
+
+  
   }        
 
     
