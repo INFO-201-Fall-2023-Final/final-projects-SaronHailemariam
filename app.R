@@ -10,56 +10,38 @@ prescription_rates_df<- read.csv("Medicaid Opioid Prescribing Rates by Geography
 overdose_df<-read.csv("NCHS_-_Drug_Poisoning_Mortality_by_County__United_States.csv") 
 
 
-#death$count<-fluidPage(
-#  sidebarLayout(
-#  sidebarPanel(
-#    h1("Deaths"),
-#    sliderInput( 
-#      inputId = "death_map", 
-#      label= "Select year to view overdose death rates",
-#      choices= prescription_rates_df$Year)
-#  )
-#),
-#  mainPanel(
-#    tabsetPanel(
-#      tabPanel("Plot",h3("Plot Title"), plotOutput(outputId = "map")),
-  
-  
-
-
-#ui<-navbarPage(
-#  "Introduction",
-#        tabPanel("deathcoutbt", death$count),
-
-          
-#                          ))
-#  ))
-#server<-function(input, output){
-#  output$map<-renderPlotly({
-#    return(rate_deaths_by_state(prescription_rates_df, input$death_map))
-#    
-#  })
-#}
-
 
 ui<-fluidPage(
   
- page_one<- sidebarLayout(
+  #Page 1
+  #__________________________________________________________
+ page_one<-titlePanel("Introduction"),
+ h3("cool"),
+ 
+   
+   
+   
+   
+#Page 2
+#______________________________________________________________________
+page_two<- sidebarLayout(
   sidebarPanel(
-    titlePanel("Death by Drug Overdose"),
-      selectInput( 
-       inputId = "death_map", 
-       label= "Select year to view overdose death rates",
-       choices= df$Year)
-),
-   mainPanel(
+    titlePanel("The problem"),
+    selectInput( 
+      inputId = "death_map", 
+      label= "Select year to view overdose death rates",
+      choices= df$Year)
+  ),
+  mainPanel(
     h3("Bar graph of deaths"),
-   plotlyOutput(outputId = "bar")
-     )), 
+    plotlyOutput(outputId = "bar")
+  )), 
 
+
+#___________________________________________________________
 tabsetPanel(
   tabPanel("Death by Drug Overdose", page_one),
- # tabPanel("The problem", page_two),
+ tabPanel("The problem", page_two),
  # tabPanel("Medicare", page_three),
  # tabPanel("Question 1", page_four),
  # tabPanel("Question 2", page_five),
@@ -70,8 +52,8 @@ tabsetPanel(
 
 server<-function(input, output){
 
-    output$bar<-renderPlotly({
-      B<-ggplotly(df, aes(x=year, y=mean_Model.based.Death.Rate))+
+output$bar<-renderPlotly({
+      B<-ggplotly(df, aes(x= Year , y=mean_Model.based.Death.Rate))+
         geom_bar(stat="identity")+
         labs(x="Year", y="Death Rate",
              title="...",
@@ -82,4 +64,4 @@ server<-function(input, output){
   }        
 
     
-shinyApp(ui,server)
+shinyApp(ui,server)  
