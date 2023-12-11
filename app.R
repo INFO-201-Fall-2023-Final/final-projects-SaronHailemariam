@@ -224,8 +224,23 @@ Comapre_panel <- fluidPage(
 
 #Page 5 Conclusions Is drug overdose deaths actually a probelm? is it caused by medicare? does medicare contribute at alll?
 #_____________________________________________________
-Conclusions <- fluidPage("Conclusion")
-
+Conclusions <- fluidPage(h2("Conclusion"),
+                         p("In conclusion there are many important trends to be seen within the overdose death data as well as its
+                         correlation with Medicare Opioid prescription rates."),
+                         tags$ul(
+                           tags$li("Overdose deaths have increased year after year in the timeframe looked at in our data"),
+                           tags$li("The five states with the highest overdose rates were West Virgina, Kentucky, District of Columbia, New Mexico, and Maryland."),
+                           tags$li("Medicare opioid prescription rates are going down over the four year time span in all four regions looked at in the data."),
+                           tags$li("When correlation between Medicare opioid prescription rates and death rates was examined a negative correlation was seen across most years
+                                   and regions. This means that states with higher opioid prescription rates are less likely to have higher numbers of overdose fatalities.")
+                         ),
+                         p("Drug overdoses are a rampant, tragic issue facing many people across the world. Here in the United States, fatalities
+                           are on the rise. Medicare, an insurance that typically covers many high-risk groups such as those with low-income, those with certain disabilities,
+                           and those over 65. Medicare prescription rates do not seem to have a strong correlation to areas with high overdose death states, and instead seemed
+                           to have a preventative effect. Drug overdoses are a devastating topic that deserve a triage effort to fix with strong resources to provide mental health
+                           and financial support. Our goal was to examine one possible avenue of addiction and overdose, as over-prescrition was a strong contributing factor to the
+                           explosion of opioids nationwide."
+                         ))
 
 
 #Server stuff
