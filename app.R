@@ -148,12 +148,14 @@ ui<-navbarPage("Death by Drug Overdose",
 
 server<-function(input, output){
   
-  output$yr <- renderUI({
-    return(rate_year(df,input$year_death)) 
+
+   output$yr <- renderText({
+  return(rate_deaths_per_yr(input$year_death))
+  
   })
   
-  output$st <- renderUI({
-    return(rate_deaths_per_state(df, input$state_death)) 
+  output$st <- renderText({
+    return(rate_deaths_by_state(input$state_death)) 
   })
   
    
