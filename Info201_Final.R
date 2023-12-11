@@ -137,3 +137,87 @@ perc_opioid_prescribed<-((total_Opioid_Clms/df$sum_Tot_Clms)*100)
 #National avg drug related death rate  
 avg_death_rate<-mean(df$mean_Model.based.Death.Rate)
 
+
+rate_deaths_per_yr<-function(Year){
+  yearly_death_rate<-group_by(df, Year)
+  deaths_yr_rate<-round(mean(yearly_death_rate$mean_Model.based.Death.Rate[yearly_death_rate$Year==Year]))
+  return(deaths_yr_rate)
+}
+rate_deaths_per_yr(2018)
+
+#Function gives the average death rate by state
+rate_deaths_by_state<-function(State){
+  state_death_rate<-group_by(df,State)
+  deaths_state_rate<-round(mean(state_death_rate$mean_Model.based.Death.Rate[state_death_rate$State==State]))
+  return(deaths_state_rate)
+}
+
+#Function gives the average death rate per year and by state
+rate_deaths_state_yr<-function(state, year){
+  rdsy<-df[df$State==state & df$Year==year,]
+  state_yr_death_rate<-mean(rdsy$mean_Model.based.Death.Rate)
+  return(state_yr_death_rate)
+}
+
+
+#This part stores some national value
+
+#Percentage of all claims that are for opioids 
+total_Opioid_Clms<-sum(df$sum_Tot_Opioid_Clms)
+total_Clms<-sum(df$sum_Tot_Clms)
+perc_opioid_prescribed<-((total_Opioid_Clms/df$sum_Tot_Clms)*100)
+ 
+#National avg drug related death rate  
+avg_death_rate<-mean(df$mean_Model.based.Death.Rate)
+
+
+
+#___________________________________________________________________________________
+#Function gives the average death rate by state from part 1
+#rate_deaths_by_state<-function(State){
+#  state_death_rate<-group_by(df,State)
+#  deaths_state_rate<-mean(state_death_rate$mean_Model.based.Death.Rate[state_death_rate$State==State])
+#  return(h3(HTML(deaths_state_rate)))
+#}
+
+
+
+
+TwentyEighteen<-(rate_deaths_per_yr(2018))
+twentytwentyone<-(rate_deaths_per_yr(2021))
+
+
+
+National_average<-round(mean(df$mean_Model.based.Death.Rate))
+above_avg<-nrow(df[df$high_overdose_death_rate_code==1,])
+below_avg<-nrow(df[df$high_overdose_death_rate_code==2,])
+
+
+risk_state_code<-function(state, year){
+  National_death_rate<-mean(df$mean_Model.based.Death.Rate)
+  st_gp<-group_by(df,State, Year)
+  st<-summarise(
+    st_gp,
+    mean_Model.based.Death.Rate_st=mean(mean_Model.based.Death.Rate))
+  
+  state_data <- filter(st, State == state & Year==year)
+  if(state_data$mean_Model.based.Death.Rate_st>=National_death_rate){
+    return(1)
+  }else {
+    return(2)
+  }
+}
+
+df$high_overdose_death_rate_code<-mapply(risk_state_code, df$State, df$Year)
+
+
+rate_year<-function(df, year_death){
+  return((df$yr[df$Year==year_death]))
+}
+rate_state<-function(df, state_death){
+  return((df$st[df$State==state_death]))
+}
+
+
+
+  
