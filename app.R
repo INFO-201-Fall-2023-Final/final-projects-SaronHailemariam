@@ -114,7 +114,8 @@ problem_panel <- fluidPage(
             TwentyEighteen,
             "By 2021 the rate had increased alarmingly to",
             twentytwentyone,
-            ".It is important to note that we
+            ". Click on a state on the legend to get an
+            idea of how much the rate changes each year for that State. It is important to note that we
                                     zoomed in to the most recent four years in which data was available because it emphasizes the most current trend."
           )
         ),
