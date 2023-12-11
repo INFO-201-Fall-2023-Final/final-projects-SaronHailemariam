@@ -47,15 +47,7 @@ As drug overdose-related deaths continue to prevail in society it is now necessa
   
   
   br(),
-  h3("Our Methods"),
-  p(
-    "We will look at the drug overdose-related death rates in the United States. Figures on the number of deaths from drug overdose come
-         from the Centers for Disease Control and are linked below. We
-         also examine Medicare prescription rates from the U.S. Medicare and Medicaid Services. That datset is  also linked below.
-        "
-  ),
-  
-  br(),
+ 
   p("By: Saron and Varun "),
   
   p("Using:RStudio"),
