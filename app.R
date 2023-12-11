@@ -7,7 +7,8 @@ library(usmap)
 library(isoband)
 source("Info201_Final.R")
 
-
+prescription_rates_df <- read.csv("prescription_rates_df_regions.csv")
+overdose_df <- read.csv("NCHS_-_Drug_Poisoning_Mortality_by_County__United_States.csv")
 prescription_rates_df <- read.csv("prescription_rates_df_regions.csv")
 overdose_df <- read.csv("NCHS_-_Drug_Poisoning_Mortality_by_County__United_States.csv")
 df <- read.csv("infodf.csv")
