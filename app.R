@@ -156,23 +156,26 @@ server<-function(input, output){
     return(rate_deaths_per_state(df, input$state_death)) 
   })
   
-  
-  
+   
 output$state <- renderPlotly({  
-    A<-ggplot(df, aes(x=mean_Model.based.Death.Rate, y=reorder(State,mean_Model.based.Death.Rate), colors=mean_Model.based.Death.Rate))+
+    A<-ggplot(df, aes(x=mean_Model.based.Death.Rate, y=reorder(State,mean_Model.based.Death.Rate), fill=mean_Model.based.Death.Rate))+
       geom_bar(stat="identity")+
-      labs(x="State", y= "Death Rate", axis.text=element_text(size=2))
+      labs(x="Death Rate", y= "State", title="Death Rate by State", axis.text=element_text(size=0.5), fill="Model Based Death Rates")
       coord_flip()
     A<- ggplotly(A, tooltip ="text") 
     return(A)
     })
 
 output$year<- renderPlotly({  
-  B<-ggplot(df, aes(x=Year, y=mean_Model.based.Death.Rate))+
+  B<-ggplot(df, aes(x=Year, y=mean_Model.based.Death.Rate, fill=State))+
     geom_bar(stat="identity")+
-    labs(x="Year ", y= "Death Rate", Title="Death Rate by Year", caption = "It is evident that the rate of drug overdose related 
+    labs(x="Year ", y= "Death Rate", 
+        title="Death Rate by Year", 
+        caption = "It is evident that the rate of drug overdose related 
          deaths in the U.S. is increasing at an alarmingly fast rate. In 2018 the death rate was", TwentyEighteen,
-         "By 2021 the death rate had increased alarmingly to ")
+         "By 2021 the death rate had increased alarmingly to ",twentytwentyone,". Click on a state on the legend to get an
+        idea of how much the rate changes each year for that State",
+        fill="State")
   B<- ggplotly(B, tooltip = "text")
   return(B)
 } ) 
