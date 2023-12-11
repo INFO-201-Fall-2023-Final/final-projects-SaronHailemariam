@@ -391,9 +391,9 @@ server <- function(input, output) {
     
     plot <-
       ggplot(data,
-             aes(x = mean_Opioid_Prscrbng_Rate, y = mean_Model.based.Death.Rate)) +
+             aes(x = mean_Opioid_Prscrbng_Rate, y = mean_Model.based.Death.Rate, color = State)) +
       geom_point() +
-      geom_smooth(method = "lm", se = FALSE) +
+      geom_smooth(method = "lm", se = FALSE, color = "black") +
       labs(title = "Correlation between Opioid Prescription Rate and Death Rate",
            x = "Opioid Prescription Rate",
            y = "Death Rate")
