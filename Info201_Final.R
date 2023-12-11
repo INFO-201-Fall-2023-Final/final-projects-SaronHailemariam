@@ -115,7 +115,7 @@ rate_deaths_per_yr(2018)
 #Function gives the average death rate by state
 rate_deaths_by_state<-function(State){
   state_death_rate<-group_by(df,State)
-  deaths_state_rate<-mean(state_death_rate$mean_Model.based.Death.Rate[state_death_rate$State==State])
+  deaths_state_rate<-round(mean(state_death_rate$mean_Model.based.Death.Rate[state_death_rate$State==State]))
   return(deaths_state_rate)
 }
 
