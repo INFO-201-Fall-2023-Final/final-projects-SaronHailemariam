@@ -4,6 +4,7 @@ library(ggplot2)
 prescription_rates_df<- read.csv("Medicaid Opioid Prescribing Rates by Geography.csv") 
 overdose_df<-read.csv("NCHS_-_Drug_Poisoning_Mortality_by_County__United_States.csv") 
 
+#learned how to make a hyperlink from https://stackoverflow.com/questions/42047422/create-url-hyperlink-in-r-shiny
 #Data Joining
 
 #Adds a new column named State in the prescription_rates_df
