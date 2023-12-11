@@ -233,3 +233,10 @@ df <- df %>%
     TRUE ~ NA_character_  # for any state not matching the above
   ))
   
+
+
+max_number<-max(df$mean_Model.based.Death.Rate)
+highest_state<-df[df$mean_Model.based.Death.Rate==max_number,"State"]
+
+min_number<-min(df$mean_Model.based.Death.Rate)
+lowest_state<-df[df$mean_Model.based.Death.Rate==min_number,"State"]
