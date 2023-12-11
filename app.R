@@ -249,7 +249,7 @@ Conclusions <- fluidPage(h2("Conclusion"),
                         br(),
                          p("Thank you so much for taking the time to look at our project. We hope drug overdoses are a social issue you continue to examine throughout your life to inform what issues may
 be important to you and possibly find ways to help out!"
-                        )
+                        ))
 
 
 #Server stuff
