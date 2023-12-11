@@ -16,22 +16,22 @@ df<-read.csv("infodf.csv")
  
 intro_panel<- fluidPage( 
               h2("Introduction "),
-              p(" In the year 2021 alone,", twentytwentyone, "people have died as a result of drug overdoes  in the United States. 
-As drug overdose related deaths continues to prevail in society it is now necessary more 
-                than ever to understand the basis of drug overdose realted deaths and the implications on public health deaths
- . Analysis of drug overdose related deaths has important implications for the clinical use of drugs, 
-                detection procedure, and public policy. In the present day, prescribed opioid use,  is brought into a 
-                new light as emerging laws and studies question the rates and nessecaitys of its use. And is therefore 
+              p(" In the year 2021 alone, the model based death rate as a result of drug overdoes  in the United States was ,", twentytwentyone, ".
+As drug overdose-related deaths continue to prevail in society it is now necessary more
+                than ever to understand the basis of drug overdose-realted deaths and the implications on public health deaths
+ . Analysis of drug overdose-related deaths has important implications for the clinical use of drugs, 
+                detection procedures, and public policy. In the present day, prescribed opioid use  is brought into a 
+                new light as emerging laws and studies question the rates and necessity of its use. And is therefore 
                 a good starting point."),
-              p("We explore how this number compares to previous year to determine if there really is a problem . 
+              p("We explore how this number compares to the previous years to determine if there really is a problem. 
                 We will also investigate a possible cause that might not be obvious initially "),
          
         
          br(),
          h3("Our Methods"),
-         p("We will look at the drug overdose related death rates in the United States. Figures on the numbers of deaths from drug overdose comes 
-         from the Centers for Disease Control and is linked below. We 
-         also examine Meidcare prescription rates from the U.S Medicare and Medicade Services. That datset is  also linked below. 
+         p("We will look at the drug overdose-related death rates in the United States. Figures on the number of deaths from drug overdose come 
+         from the Centers for Disease Control and are linked below. We 
+         also examine Medicare prescription rates from the U.S. Medicare and Medicaid Services. That datset is  also linked below. 
         "),
          
          
@@ -86,17 +86,17 @@ sidebarLayout(
       h3("Seeing is believing"),
        tabsetPanel(
        tabPanel("Death by Year", plotlyOutput(outputId = "year"), 
-       p("It is evident that the model based rate of drug overdose related 
-         deaths in the U.S. is increasing at an alarmingly fast rate. In 2018 the rate was", TwentyEighteen,
+       p("It is evident that the model-based rate of drug overdose related 
+         deaths in the U.S. are increasing at an alarmingly fast rate. In 2018 the rate was", TwentyEighteen,
                                     "By 2021 the rate had increased alarmingly to",twentytwentyone,".It is important to note that we
-                                    zoomed in to the most recent four years in wich data was available because it emphazise the mostcurrennt trend." )),
+                                    zoomed in to the most recent four years in which data was available because it emphasizes the most current trend." )),
        
        tabPanel("Death by State", plotlyOutput(outputId = "state"))),
-      p("As shown, there is vraibaility in the model based death rates between States.", highest_state,"had the highest drug overdose mortality rate and",lowest_state,"had the lowest")
+      p("As shown, there is variability in the model-based death rates between States.", highest_state," had the highest drug overdose mortality rate and",lowest_state,"had the lowest")
 )),
 tabPanel(
-  h3("Comparing model based death rates between States"),
-  p("We have defined states high risk if the drug related overdose rate are greater than the national average,",National_average,"."),
+  h3("Comparing model-based death rates between States"),
+  p("We have defined states high risk if the drug-related overdose rate are greater than the national average,",National_average,"."),
   tabPanel("At Risk States", plotlyOutput(outputId = "risk")),
 
 
