@@ -235,7 +235,7 @@ ui <- navbarPage(
   tabPanel("About", intro_panel),
   tabPanel("Explore the problem", problem_panel),
   tabPanel("Medicare",  Medicare_panel),
-  tabPanel("Exploring Medicare as the causitve agent", Comapre_panel),
+  tabPanel("Exploring Medicare as the causitive agent", Comapre_panel),
   tabPanel("Conclusion", Conclusions)
 )
 
