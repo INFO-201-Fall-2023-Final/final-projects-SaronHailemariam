@@ -219,5 +219,17 @@ rate_state<-function(df, state_death){
 }
 
 
+west_states <- c("Washington", "Oregon", "California", "Nevada", "Idaho", "Montana", "Wyoming", "Utah", "Colorado", "Arizona", "New Mexico", "Alaska", "Hawaii")
+midwest_states <- c("North Dakota", "South Dakota", "Nebraska", "Kansas", "Minnesota", "Iowa", "Missouri", "Wisconsin", "Illinois", "Michigan", "Indiana", "Ohio")
+south_states <- c("Texas", "Oklahoma", "Arkansas", "Louisiana", "Kentucky", "Tennessee", "Mississippi", "Alabama", "Georgia", "Florida", "South Carolina", "North Carolina", "Virginia", "West Virginia", "Maryland", "Delaware", "District of Columbia")
+north_states <- c("Maine", "New Hampshire", "Vermont", "Massachusetts", "Rhode Island", "Connecticut", "New York", "New Jersey", "Pennsylvania")
 
+df <- df %>%
+  mutate(Region = case_when(
+    State %in% west_states ~ "West",
+    State %in% midwest_states ~ "Midwest",
+    State %in% south_states ~ "South",
+    State %in% north_states ~ "North",
+    TRUE ~ NA_character_  # for any state not matching the above
+  ))
   
