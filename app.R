@@ -5,7 +5,7 @@ library(shiny)
 library(plotly)
 library(usmap)
 library(isoband)
-#source("Info201_Final.R")
+source("Info201_Final.R")
 
 
 prescription_rates_df <- read.csv("prescription_rates_df_regions.csv")
