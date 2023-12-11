@@ -182,7 +182,10 @@ Medicare_panel <- fluidPage(
       actionButton("submit", "Submit")
     ),
     mainPanel(plotlyOutput("medicarePlot"))
-  )
+  ),
+  p("Next, we wanted to examine medicare opioid prescription rates across four different regions and eight years (2013-2021). As you click through,
+    you will notice that across almost all regions, opioid prescriptions from Medicare are down. When thinking about the opioid epidemic, one of the main
+    contributing factors was the over-prescription of the drugs that ended up getting people hooked, so it was an important factor to explore further.")
 )
 
 
@@ -218,7 +221,9 @@ Comapre_panel <- fluidPage(
     ),
     
     mainPanel(plotlyOutput("correlationPlot"))
-  )
+  ),p("Finally, we wanted to examine to see if there was a correlation between states with high opioid prescription rates through Medicare. Though rather
+    minor, across most regions and years, there appears to be an inverse relationship between opioid prescription rates and death rates. Generally,
+    states with higher rates of prescription had fewer deaths. One important region that seemed to differ from this trend was in the north, where the correlation was positive. Feel free to click through these different regions and years to see how these two factors correlate.")
 )
 
 
@@ -229,18 +234,22 @@ Conclusions <- fluidPage(h2("Conclusion"),
                          correlation with Medicare Opioid prescription rates."),
                          tags$ul(
                            tags$li("Overdose deaths have increased year after year in the timeframe looked at in our data"),
-                           tags$li("The five states with the highest overdose rates were West Virgina, Kentucky, District of Columbia, New Mexico, and Maryland."),
+                           tags$li("The five states with the highest overdose rates were West Virginia, Kentucky, District of Columbia, New Mexico, and Maryland."),
                            tags$li("Medicare opioid prescription rates are going down over the four year time span in all four regions looked at in the data."),
-                           tags$li("When correlation between Medicare opioid prescription rates and death rates was examined a negative correlation was seen across most years
+                           tags$li("When the correlation between Medicare opioid prescription rates and death rates was examined a negative correlation was seen across most years
                                    and regions. This means that states with higher opioid prescription rates are less likely to have higher numbers of overdose fatalities.")
                          ),
                          p("Drug overdoses are a rampant, tragic issue facing many people across the world. Here in the United States, fatalities
-                           are on the rise. Medicare, an insurance that typically covers many high-risk groups such as those with low-income, those with certain disabilities,
-                           and those over 65. Medicare prescription rates do not seem to have a strong correlation to areas with high overdose death states, and instead seemed
-                           to have a preventative effect. Drug overdoses are a devastating topic that deserve a triage effort to fix with strong resources to provide mental health
-                           and financial support. Our goal was to examine one possible avenue of addiction and overdose, as over-prescrition was a strong contributing factor to the
+                           are on the rise. Medicare is an insurance that typically covers many high-risk groups such as those with low income, those with certain disabilities,
+                           and those over 65. Medicare prescription rates do not seem to have a strong correlation to areas with high overdose death states and instead seem
+                           to have a preventative effect. Drug overdoses are a devastating issue that deserves a triage effort to fix with strong resources to provide mental health
+                           and financial support. Our goal was to examine one possible avenue of addiction and overdose, as over-prescription was a strong contributing factor to the
                            explosion of opioids nationwide."
-                         ))
+                         ),
+                        br(),
+                         p("Thank you so much for taking the time to look at our project. We hope drug overdoses are a social issue you continue to examine throughout your life to inform what issues may
+be important to you and possibly find ways to help out!"
+                        )
 
 
 #Server stuff
@@ -250,7 +259,7 @@ ui <- navbarPage(
   tabPanel("About", intro_panel),
   tabPanel("Explore the problem", problem_panel),
   tabPanel("Medicare",  Medicare_panel),
-  tabPanel("Exploring Medicare as the causitive agent", Comapre_panel),
+  tabPanel("Exploring Medicare as a Causative Agent?", Comapre_panel),
   tabPanel("Conclusion", Conclusions)
 )
 
